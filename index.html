@@ -1,244 +1,422 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BaoLingo — Học tiếng Nhật</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BaoLingo Nhật - JLPT N5 → N1</title>
 
 <style>
 :root{
-  color-scheme:light dark;
   --bg:#07111f;
   --panel:#101c2d;
   --panel2:#16253a;
   --text:#f6f8fb;
-  --muted:#aab7c9;
+  --muted:#9eacc0;
   --accent:#63e6be;
   --danger:#ff6b6b;
   --gold:#ffd166;
-  --line:#263852
+  --line:#263852;
+  --blue:#7aa7ff;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-  background:#07111f;
-  color:var(--text)
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+button{
+  font:inherit;
 }
 
 #app{
   min-height:100vh;
-  background:var(--bg);
-  padding:20px
+  padding:18px;
 }
 
 .wrap{
-  max-width:900px;
-  margin:auto
+  max-width:1050px;
+  margin:auto;
 }
+
+/* HEADER */
 
 .top{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:12px;
-  margin-bottom:14px
+  gap:18px;
+  margin-bottom:14px;
 }
 
 .brand{
-  font-size:clamp(24px,5vw,38px);
-  font-weight:900
+  font-size:clamp(25px,5vw,40px);
+  font-weight:950;
+  letter-spacing:-1px;
 }
 
 .sub{
   color:var(--muted);
-  font-size:14px
+  font-size:14px;
+  margin-top:3px;
 }
 
 .stats{
   display:flex;
-  gap:8px;
-  flex-wrap:wrap
+  gap:7px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
 }
 
 .pill{
   background:var(--panel);
   border:1px solid var(--line);
-  padding:8px 12px;
+  padding:8px 11px;
   border-radius:999px;
-  font-weight:800
+  font-weight:850;
+  font-size:14px;
 }
 
+/* GAME */
+
 .gamebox{
-  position:relative;
   background:#0b1728;
   border:1px solid var(--line);
-  border-radius:20px;
+  border-radius:22px;
   overflow:hidden;
-  box-shadow:0 18px 60px #0005
+  box-shadow:0 18px 60px #0006;
 }
 
 .hud{
-  position:absolute;
-  z-index:3;
-  left:12px;
-  right:12px;
-  top:12px;
   display:flex;
   justify-content:space-between;
-  pointer-events:none
+  gap:10px;
+  padding:12px;
+  border-bottom:1px solid var(--line);
+  background:#091526;
 }
 
 .hud span{
-  background:#07111dcc;
-  border:1px solid #ffffff18;
+  background:#07111f;
+  border:1px solid #ffffff14;
   padding:7px 10px;
   border-radius:10px;
-  font-weight:800
+  font-weight:800;
+  font-size:13px;
 }
 
-.hud .gold{
-  color:var(--gold)
+.gold{
+  color:var(--gold);
 }
 
 .card{
-  width:min(90%,700px);
-  margin:auto;
-  padding:26px;
-  border:1px solid #ffffff18;
-  border-radius:20px;
-  background:#101c2df2;
-  text-align:center
+  padding:24px;
+  min-height:500px;
+  text-align:center;
 }
+
+.eyebrow{
+  font-size:12px;
+  font-weight:900;
+  color:var(--accent);
+  letter-spacing:1.2px;
+}
+
+.hero{
+  font-size:clamp(28px,5vw,46px);
+  margin:8px 0;
+}
+
+.muted{
+  color:var(--muted);
+}
+
+/* LEVEL */
+
+.levelrow,
+.row{
+  display:flex;
+  gap:9px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+/* LESSON */
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin:18px 0;
+}
+
+.lesson{
+  padding:15px;
+  border:1px solid var(--line);
+  background:var(--panel);
+  color:var(--text);
+  border-radius:16px;
+  cursor:pointer;
+  text-align:left;
+  transition:.15s;
+}
+
+.lesson:hover{
+  transform:translateY(-2px);
+  border-color:var(--accent);
+}
+
+.lesson b{
+  display:block;
+  font-size:17px;
+}
+
+.lesson small{
+  color:var(--muted);
+  display:block;
+  margin-top:4px;
+}
+
+/* BUTTON */
 
 .btn{
   border:0;
   border-radius:12px;
-  padding:12px 18px;
-  font-size:16px;
+  padding:11px 16px;
+  font-size:15px;
   font-weight:900;
   cursor:pointer;
   background:var(--accent);
-  color:#062018
+  color:#062018;
 }
 
 .btn.secondary{
   background:var(--panel2);
   color:var(--text);
-  border:1px solid var(--line)
+  border:1px solid var(--line);
 }
 
-.btn.secondary:hover{
-  border-color:var(--accent);
-  transform:translateY(-1px)
+.btn.selected{
+  outline:2px solid var(--accent);
 }
 
-.row{
-  display:flex;
+/* PROGRESS */
+
+.progressbox{
+  max-width:600px;
+  margin:18px auto;
+  text-align:left;
+}
+
+.bar{
+  height:9px;
+  background:var(--panel2);
+  border-radius:99px;
+  overflow:hidden;
+}
+
+.bar i{
+  display:block;
+  height:100%;
+  width:0;
+  background:var(--accent);
+  transition:.25s;
+}
+
+/* QUIZ */
+
+.quizhead{
+  color:var(--muted);
+  font-size:14px;
+}
+
+.question{
+  font-size:clamp(25px,6vw,48px);
+  font-weight:950;
+  margin:14px auto;
+  max-width:850px;
+  line-height:1.25;
+}
+
+.passage{
+  max-width:760px;
+  margin:14px auto;
+  padding:16px;
+  text-align:left;
+  white-space:pre-line;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  line-height:1.8;
+  font-size:17px;
+}
+
+.options{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,360px));
   gap:10px;
-  justify-content:center;
-  flex-wrap:wrap
+  max-width:760px;
+  margin:18px auto;
+}
+
+.option{
+  padding:14px 16px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  color:var(--text);
+  border-radius:14px;
+  cursor:pointer;
+  text-align:left;
+  font-weight:750;
+}
+
+.option:hover:not(:disabled){
+  border-color:var(--accent);
+  transform:translateY(-1px);
+}
+
+.option:disabled{
+  cursor:default;
+  opacity:.9;
+}
+
+.correct{
+  border-color:var(--accent)!important;
+  background:#113a31!important;
+}
+
+.wrong{
+  border-color:var(--danger)!important;
+  background:#3b1b24!important;
+}
+
+.feedback{
+  min-height:48px;
+  font-weight:800;
+  line-height:1.5;
 }
 
 .controls{
   display:flex;
-  gap:10px;
+  gap:9px;
   justify-content:center;
-  margin:14px 0
+  flex-wrap:wrap;
+  margin:13px 0;
 }
 
 .ctrl{
-  width:130px;
-  height:52px;
+  padding:11px 15px;
   border:1px solid var(--line);
-  border-radius:14px;
+  border-radius:12px;
   background:var(--panel);
   color:var(--text);
-  font-size:16px;
-  font-weight:900;
-  cursor:pointer
+  cursor:pointer;
+  font-weight:850;
 }
 
-.info{
-  margin-top:14px;
+/* RESULT */
+
+.result{
+  max-width:650px;
+  margin:auto;
+}
+
+.result h2{
+  font-size:36px;
+}
+
+.resultStats{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin:20px 0;
 }
 
-.info div{
+.resultStats div{
   padding:16px;
   background:var(--panel);
   border:1px solid var(--line);
-  border-radius:16px
+  border-radius:14px;
+}
+
+.resultStats b{
+  display:block;
+  font-size:24px;
+}
+
+.tiny{
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* INFO */
+
+.info{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:12px;
+}
+
+.info div{
+  padding:15px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
 }
 
 .info b{
   display:block;
-  margin-bottom:5px
+  margin-bottom:5px;
 }
 
 .info span{
   color:var(--muted);
-  font-size:14px
+  font-size:13px;
+  line-height:1.5;
 }
 
-.lesson{
-  min-width:200px;
-  min-height:60px;
-  font-size:18px
+.hidden{
+  display:none!important;
 }
 
-#quiz{
-  padding-top:35px
-}
+/* MOBILE */
 
-#word{
-  font-size:clamp(40px,9vw,72px);
-  margin:18px 0
-}
+@media(max-width:720px){
 
-#options .btn{
-  min-width:145px;
-  margin:3px
-}
-
-#feedback{
-  min-height:25px;
-  font-weight:800
-}
-
-@media(max-width:650px){
   #app{
-    padding:12px
-  }
-
-  .info{
-    grid-template-columns:1fr
+    padding:10px;
   }
 
   .top{
     align-items:flex-start;
-    flex-direction:column
+    flex-direction:column;
   }
 
-  .lesson{
-    width:100%
+  .stats{
+    justify-content:flex-start;
   }
 
-  .hud{
-    position:relative;
-    left:auto;
-    right:auto;
-    top:auto;
-    padding:10px
+  .grid,
+  .info{
+    grid-template-columns:1fr;
   }
 
-  .gamebox{
-    padding-bottom:10px
+  .options{
+    grid-template-columns:1fr;
   }
+
+  .card{
+    padding:18px;
+    min-height:520px;
+  }
+
 }
 </style>
 </head>
@@ -246,571 +424,2066 @@ body{
 <body>
 
 <div id="app">
+
 <div class="wrap">
+
+<!-- HEADER -->
 
 <div class="top">
 
   <div>
     <div class="brand">🦉 BaoLingo Nhật</div>
+
     <div class="sub">
-      Học tiếng Nhật bằng cách chơi — lộ trình JLPT N5.
+      Học tiếng Nhật bằng game — JLPT N5 → N1
     </div>
   </div>
 
   <div class="stats">
+
     <div class="pill">
-      🔥 Chuỗi: <span id="streak">0</span>
+      🔥 Chuỗi:
+      <span id="streak">0</span>
     </div>
 
     <div class="pill">
-      ⭐ Điểm: <span id="score">0</span>
+      ⭐ Điểm:
+      <span id="score">0</span>
     </div>
 
     <div class="pill">
-      ❤️ <span id="lives">3</span>
+      ❤️
+      <span id="lives">3</span>
     </div>
+
+    <div class="pill">
+      🏆 Cấp:
+      <span id="level">1</span>
+    </div>
+
   </div>
 
 </div>
 
+
+<!-- GAME -->
 
 <div class="gamebox">
 
-<div class="hud">
-  <span id="progress">Chọn bài học</span>
+  <div class="hud">
 
-  <span class="gold">
-    💎 <span id="xp">0</span> XP
-  </span>
-</div>
+    <span id="progress">
+      Chọn bài học
+    </span>
 
-
-<div
-class="card"
-style="margin:0;border:0;border-radius:0;width:100%;min-height:390px;display:flex;flex-direction:column;justify-content:center"
->
-
-
-<!-- MENU -->
-
-<div id="menu">
-
-  <div style="font-size:14px;color:var(--muted);margin-bottom:10px">
-    🇯🇵 LỘ TRÌNH JLPT N5
-  </div>
-
-  <h1 style="margin:8px 0">
-    Chọn bài học
-  </h1>
-
-  <div class="row">
-
-    <button
-      class="btn secondary lesson"
-      data-mode="hiragana"
-    >
-      あ Hiragana
-    </button>
-
-    <button
-      class="btn secondary lesson"
-      data-mode="katakana"
-    >
-      カ Katakana
-    </button>
-
-    <button
-      class="btn secondary lesson"
-      data-mode="vocab"
-    >
-      📝 Từ vựng N5
-    </button>
-
-    <button
-      class="btn secondary lesson"
-      data-mode="kanji"
-    >
-      漢 Kanji N5
-    </button>
+    <span class="gold">
+      💎
+      <span id="xp">0</span>
+      XP
+    </span>
 
   </div>
 
-  <p style="color:var(--muted);line-height:1.55">
-    Mỗi bài 10 câu · 3 tim · trả lời đúng nhận XP.
-  </p>
 
-</div>
+  <div class="card">
 
 
-<!-- QUIZ -->
+    <!-- MENU -->
 
-<div id="quiz" style="display:none">
+    <section id="menu">
 
-  <div
-    id="modeLabel"
-    style="font-size:14px;color:var(--muted);margin-bottom:10px"
-  >
-    Từ tiếng Nhật này có nghĩa là gì?
+      <div class="eyebrow">
+        🇯🇵 BAOLINGO JAPANESE ACADEMY
+      </div>
+
+      <h1 class="hero">
+        Học tiếng Nhật như chơi game
+      </h1>
+
+      <p class="muted">
+        Chọn cấp JLPT và dạng bài.
+        Mỗi lượt có 10 câu, XP và tiến độ được lưu trên máy.
+      </p>
+
+
+      <!-- JLPT -->
+
+      <div
+        class="levelrow"
+        id="levels">
+      </div>
+
+
+      <!-- LESSONS -->
+
+      <div class="grid">
+
+        <button
+          class="lesson"
+          data-mode="vocab">
+
+          <b>📝 Từ vựng</b>
+
+          <small>
+            Nhớ nghĩa và cách dùng
+          </small>
+
+        </button>
+
+
+        <button
+          class="lesson"
+          data-mode="kanji">
+
+          <b>漢 Kanji</b>
+
+          <small>
+            Âm đọc và nghĩa
+          </small>
+
+        </button>
+
+
+        <button
+          class="lesson"
+          data-mode="grammar">
+
+          <b>文法 Ngữ pháp</b>
+
+          <small>
+            Chọn cấu trúc phù hợp
+          </small>
+
+        </button>
+
+
+        <button
+          class="lesson"
+          data-mode="reading">
+
+          <b>📖 Đọc hiểu</b>
+
+          <small>
+            Đọc đoạn ngắn và trả lời
+          </small>
+
+        </button>
+
+
+        <button
+          class="lesson"
+          data-mode="hiragana">
+
+          <b>あ Hiragana</b>
+
+          <small>
+            Nhận diện kana
+          </small>
+
+        </button>
+
+
+        <button
+          class="lesson"
+          data-mode="katakana">
+
+          <b>カ Katakana</b>
+
+          <small>
+            Nhận diện kana
+          </small>
+
+        </button>
+
+      </div>
+
+
+      <!-- XP -->
+
+      <div class="progressbox">
+
+        <div
+          style="
+          display:flex;
+          justify-content:space-between;
+          ">
+
+          <b>
+            Tiến độ cấp
+            <span id="menuLevel">
+              N5
+            </span>
+          </b>
+
+          <span class="tiny">
+
+            <span id="menuXp">
+              0
+            </span>
+
+            XP
+
+          </span>
+
+        </div>
+
+
+        <div class="bar">
+
+          <i id="xpBar"></i>
+
+        </div>
+
+
+        <div
+          class="tiny"
+          style="margin-top:7px">
+
+          Cấp người chơi:
+
+          <b id="playerLevel">
+            1
+          </b>
+
+          · Đúng:
+
+          <b id="totalCorrect">
+            0
+          </b>
+
+          câu
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- QUIZ -->
+
+    <section
+      id="quiz"
+      class="hidden">
+
+      <div
+        class="quizhead"
+        id="modeLabel">
+      </div>
+
+
+      <div
+        id="passage"
+        class="passage hidden">
+      </div>
+
+
+      <div
+        id="word"
+        class="question">
+      </div>
+
+
+      <button
+        class="btn secondary hidden"
+        id="speak">
+
+        🔊 Nghe phát âm
+
+      </button>
+
+
+      <div
+        id="options"
+        class="options">
+      </div>
+
+
+      <div
+        id="feedback"
+        class="feedback">
+      </div>
+
+
+      <button
+        class="btn hidden"
+        id="next">
+
+        Câu tiếp theo →
+
+      </button>
+
+    </section>
+
+
+    <!-- RESULT -->
+
+    <section
+      id="result"
+      class="hidden result">
+
+      <div class="eyebrow">
+        🎉 HOÀN THÀNH
+      </div>
+
+
+      <h2 id="resultTitle">
+        Tốt lắm!
+      </h2>
+
+
+      <p
+        class="muted"
+        id="resultText">
+      </p>
+
+
+      <div class="resultStats">
+
+        <div>
+
+          <b id="resultCorrect">
+            0
+          </b>
+
+          <span class="tiny">
+            Đúng
+          </span>
+
+        </div>
+
+
+        <div>
+
+          <b id="resultScore">
+            0
+          </b>
+
+          <span class="tiny">
+            Điểm
+          </span>
+
+        </div>
+
+
+        <div>
+
+          <b id="resultXp">
+            0
+          </b>
+
+          <span class="tiny">
+            XP nhận
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="row">
+
+        <button
+          class="btn"
+          id="again">
+
+          Chơi lại
+
+        </button>
+
+
+        <button
+          class="btn secondary"
+          id="resultMenu">
+
+          Chọn bài khác
+
+        </button>
+
+      </div>
+
+    </section>
+
   </div>
 
-  <h1 id="word">
-    りんご
-  </h1>
-
-  <div id="options" class="row"></div>
-
-  <p id="feedback"></p>
-
-  <button
-    class="btn"
-    id="next"
-    style="display:none"
-  >
-    Câu tiếp theo →
-  </button>
-
 </div>
 
-</div>
-</div>
 
+<!-- CONTROLS -->
 
 <div class="controls">
 
   <button
     class="ctrl"
-    id="start"
-  >
-    ▶ Bắt đầu
+    id="restart">
+
+    ↻ Chơi lại
+
   </button>
+
 
   <button
     class="ctrl"
-    id="restart"
-  >
-    ↻ Chơi lại
+    id="backMenu">
+
+    📚 Chọn bài
+
+  </button>
+
+
+  <button
+    class="ctrl"
+    id="reset">
+
+    🗑 Xóa tiến độ
+
   </button>
 
 </div>
 
+
+<!-- INFO -->
 
 <div class="info">
 
   <div>
-    <b>🎯 Cách chơi</b>
+
+    <b>🎯 Game</b>
 
     <span>
-      Chọn đáp án đúng.
-      Sai mất 1 tim, đúng nhận XP và tăng chuỗi.
+      10 câu/lượt · 3 tim · đúng được XP ·
+      sai hiện đáp án và giải thích.
     </span>
+
   </div>
+
 
   <div>
-    <b>📚 Lộ trình</b>
+
+    <b>🎓 JLPT</b>
 
     <span>
-      N5 bắt đầu với Hiragana, Katakana,
-      từ vựng và Kanji. Tiến độ được lưu trên máy.
+      N5 → N1, gồm từ vựng, Kanji,
+      ngữ pháp và đọc hiểu.
     </span>
+
+  </div>
+
+
+  <div>
+
+    <b>💾 Lưu tự động</b>
+
+    <span>
+      XP, điểm, chuỗi và thống kê được
+      lưu bằng localStorage.
+    </span>
+
   </div>
 
 </div>
 
 </div>
+
 </div>
 
 
 <script>
 
-/* =========================
-   DỮ LIỆU BÀI HỌC
-========================= */
+/* =========================================================
+   KANA
+========================================================= */
 
-const lessons = {
+const kanaH = [
 
-  hiragana: [
+["あ","a"],
+["い","i"],
+["う","u"],
+["え","e"],
+["お","o"],
 
-    ['あ','a','i','u','e'],
+["か","ka"],
+["き","ki"],
+["く","ku"],
+["け","ke"],
+["こ","ko"],
 
-    ['か','ka','sa','ta','na'],
+["さ","sa"],
+["し","shi"],
+["す","su"],
+["せ","se"],
+["そ","so"],
 
-    ['し','shi','chi','tsu','ki'],
+["た","ta"],
+["ち","chi"],
+["つ","tsu"],
+["て","te"],
+["と","to"],
 
-    ['つ','tsu','te','to','su'],
+["な","na"],
+["に","ni"],
+["ぬ","nu"],
+["ね","ne"],
+["の","no"],
 
-    ['ね','ne','ni','nu','no'],
+["は","ha"],
+["ひ","hi"],
+["ふ","fu"],
+["へ","he"],
+["ほ","ho"],
 
-    ['ふ','fu','ha','hi','he'],
+["ま","ma"],
+["み","mi"],
+["む","mu"],
+["め","me"],
+["も","mo"],
 
-    ['む','mu','ma','mi','me'],
+["や","ya"],
+["ゆ","yu"],
+["よ","yo"],
 
-    ['よ','yo','ya','yu','ye'],
+["ら","ra"],
+["り","ri"],
+["る","ru"],
+["れ","re"],
+["ろ","ro"],
 
-    ['り','ri','ra','ru','re'],
+["わ","wa"],
+["を","wo"],
+["ん","n"]
 
-    ['ん','n','m','r','ng']
-
-  ],
-
-
-  katakana: [
-
-    ['ア','a','i','u','e'],
-
-    ['カ','ka','sa','ta','na'],
-
-    ['シ','shi','chi','tsu','ki'],
-
-    ['ツ','tsu','te','to','su'],
-
-    ['ネ','ne','ni','nu','no'],
-
-    ['フ','fu','ha','hi','he'],
-
-    ['ム','mu','ma','mi','me'],
-
-    ['ヨ','yo','ya','yu','ye'],
-
-    ['リ','ri','ra','ru','re'],
-
-    ['ン','n','m','r','ng']
-
-  ],
-
-
-  vocab: [
-
-    ['りんご','quả táo','con mèo','ngôi nhà','mặt trời'],
-
-    ['学校（がっこう）','trường học','bệnh viện','nhà ga','công ty'],
-
-    ['先生（せんせい）','giáo viên','học sinh','bác sĩ','nhân viên'],
-
-    ['友達（ともだち）','bạn bè','gia đình','hàng xóm','khách hàng'],
-
-    ['食べる（たべる）','ăn','uống','ngủ','đi'],
-
-    ['飲む（のむ）','uống','ăn','mua','bán'],
-
-    ['大きい（おおきい）','to, lớn','nhỏ','mới','cũ'],
-
-    ['新しい（あたらしい）','mới','cũ','đắt','rẻ'],
-
-    ['早い（はやい）','sớm, nhanh','muộn','chậm','xa'],
-
-    ['大切（たいせつ）','quan trọng','khó','dễ','nguy hiểm']
-
-  ],
+];
 
 
-  kanji: [
+const kanaK = [
 
-    ['人（ひと）','người','nước','ngày','thời gian'],
+["ア","a"],
+["イ","i"],
+["ウ","u"],
+["エ","e"],
+["オ","o"],
 
-    ['日（ひ）','mặt trời, ngày','mặt trăng','năm','đêm'],
+["カ","ka"],
+["キ","ki"],
+["ク","ku"],
+["ケ","ke"],
+["コ","ko"],
 
-    ['月（つき）','mặt trăng, tháng','ngày','tuần','giờ'],
+["サ","sa"],
+["シ","shi"],
+["ス","su"],
+["セ","se"],
+["ソ","so"],
 
-    ['火（ひ）','lửa','nước','cây','kim loại'],
+["タ","ta"],
+["チ","chi"],
+["ツ","tsu"],
+["テ","te"],
+["ト","to"],
 
-    ['水（みず）','nước','lửa','đất','gió'],
+["ナ","na"],
+["ニ","ni"],
+["ヌ","nu"],
+["ネ","ne"],
+["ノ","no"],
 
-    ['木（き）','cây','núi','sông','đá'],
+["ハ","ha"],
+["ヒ","hi"],
+["フ","fu"],
+["ヘ","he"],
+["ホ","ho"],
 
-    ['山（やま）','núi','biển','sông','đường'],
+["マ","ma"],
+["ミ","mi"],
+["ム","mu"],
+["メ","me"],
+["モ","mo"],
 
-    ['川（かわ）','sông','núi','hồ','mưa'],
+["ヤ","ya"],
+["ユ","yu"],
+["ヨ","yo"],
 
-    ['大（おお）きい','to, lớn','nhỏ','cao','thấp'],
+["ラ","ra"],
+["リ","ri"],
+["ル","ru"],
+["レ","re"],
+["ロ","ro"],
 
-    ['小（ちい）さい','nhỏ','to, lớn','mới','cũ']
+["ワ","wa"],
+["ヲ","wo"],
+["ン","n"]
 
-  ]
+];
+
+
+/* =========================================================
+   VOCABULARY
+========================================================= */
+
+const V = {
+
+N5:[
+
+["りんご","quả táo"],
+["学校（がっこう）","trường học"],
+["先生（せんせい）","giáo viên"],
+["友達（ともだち）","bạn bè"],
+["食べる（たべる）","ăn"],
+["飲む（のむ）","uống"],
+["大きい（おおきい）","to, lớn"],
+["新しい（あたらしい）","mới"],
+["早い（はやい）","sớm, nhanh"],
+["大切（たいせつ）","quan trọng"],
+["家族（かぞく）","gia đình"],
+["駅（えき）","nhà ga"],
+["病院（びょういん）","bệnh viện"],
+["仕事（しごと）","công việc"],
+["毎日（まいにち）","mỗi ngày"]
+
+],
+
+N4:[
+
+["旅行（りょこう）","du lịch"],
+["必要（ひつよう）","cần thiết"],
+["準備（じゅんび）","chuẩn bị"],
+["経験（けいけん）","kinh nghiệm"],
+["運転（うんてん）","lái xe"],
+["約束（やくそく）","lời hứa / cuộc hẹn"],
+["連絡（れんらく）","liên lạc"],
+["説明（せつめい）","giải thích"],
+["生活（せいかつ）","cuộc sống"],
+["自由（じゆう）","tự do"],
+["特別（とくべつ）","đặc biệt"],
+["安心（あんしん）","yên tâm"],
+["最近（さいきん）","gần đây"],
+["予定（よてい）","dự định / lịch trình"],
+["文化（ぶんか）","văn hóa"]
+
+],
+
+N3:[
+
+["影響（えいきょう）","ảnh hưởng"],
+["解決（かいけつ）","giải quyết"],
+["判断（はんだん）","phán đoán"],
+["関係（かんけい）","mối quan hệ"],
+["増加（ぞうか）","tăng lên"],
+["原因（げんいん）","nguyên nhân"],
+["結果（けっか）","kết quả"],
+["目的（もくてき）","mục đích"],
+["環境（かんきょう）","môi trường"],
+["責任（せきにん）","trách nhiệm"],
+["能力（のうりょく）","năng lực"],
+["改善（かいぜん）","cải thiện"],
+["確認（かくにん）","xác nhận"],
+["比較（ひかく）","so sánh"],
+["提案（ていあん）","đề xuất"]
+
+],
+
+N2:[
+
+["課題（かだい）","vấn đề / nhiệm vụ"],
+["効率（こうりつ）","hiệu suất"],
+["対応（たいおう）","ứng phó / xử lý"],
+["傾向（けいこう）","xu hướng"],
+["状況（じょうきょう）","tình hình"],
+["制度（せいど）","chế độ / hệ thống"],
+["方針（ほうしん）","phương châm / chính sách"],
+["影響（えいきょう）","ảnh hưởng"],
+["判断（はんだん）","phán đoán"],
+["維持（いじ）","duy trì"],
+["導入（どうにゅう）","đưa vào / áp dụng"],
+["削減（さくげん）","cắt giảm"],
+["実施（じっし）","thực hiện"],
+["適切（てきせつ）","thích hợp"],
+["具体的（ぐたいてき）","cụ thể"]
+
+],
+
+N1:[
+
+["概念（がいねん）","khái niệm"],
+["妥当（だとう）","thỏa đáng / hợp lý"],
+["促進（そくしん）","thúc đẩy"],
+["著しい（いちじるしい）","đáng kể / rõ rệt"],
+["把握（はあく）","nắm bắt / thấu hiểu"],
+["根拠（こんきょ）","căn cứ"],
+["顕著（けんちょ）","nổi bật / rõ rệt"],
+["懸念（けねん）","lo ngại"],
+["見解（けんかい）","quan điểm / nhận định"],
+["是正（ぜせい）","chấn chỉnh"],
+["遂行（すいこう）","thực hiện / hoàn thành"],
+["脅かす（おびやかす）","đe dọa"],
+["著者（ちょしゃ）","tác giả"],
+["精密（せいみつ）","tinh vi / chính xác"],
+["一貫（いっかん）","nhất quán"]
+
+]
 
 };
 
 
-/* =========================
-   BIẾN GAME
-========================= */
+/* =========================================================
+   KANJI
+========================================================= */
 
-let words = lessons.vocab;
+const K = {
 
-let index = 0;
+N5:[
 
-let score = 0;
+["人（ひと）","người","ひと"],
+["日（ひ）","mặt trời / ngày","ひ"],
+["月（つき）","mặt trăng / tháng","つき"],
+["火（ひ）","lửa","ひ"],
+["水（みず）","nước","みず"],
+["木（き）","cây","き"],
+["山（やま）","núi","やま"],
+["川（かわ）","sông","かわ"],
+["大（おお）きい","to, lớn","おおきい"],
+["小（ちい）さい","nhỏ","ちいさい"],
+["中（なか）","bên trong","なか"],
+["上（うえ）","phía trên","うえ"],
+["下（した）","phía dưới","した"],
+["本（ほん）","sách","ほん"],
+["学（がく）","học","がく"]
 
-let xp = 0;
+],
 
-let streak = 0;
+N4:[
 
-let lives = 3;
+["明るい（あかるい）","sáng","あかるい"],
+["暗い（くらい）","tối","くらい"],
+["近い（ちかい）","gần","ちかい"],
+["遠い（とおい）","xa","とおい"],
+["重い（おもい）","nặng","おもい"],
+["軽い（かるい）","nhẹ","かるい"],
+["強い（つよい）","mạnh","つよい"],
+["弱い（よわい）","yếu","よわい"],
+["海（うみ）","biển","うみ"],
+["春（はる）","mùa xuân","はる"]
 
-let started = false;
+],
 
-let mode = 'vocab';
+N3:[
+
+["現代（げんだい）","hiện đại","げんだい"],
+["社会（しゃかい）","xã hội","しゃかい"],
+["経済（けいざい）","kinh tế","けいざい"],
+["技術（ぎじゅつ）","kỹ thuật","ぎじゅつ"],
+["情報（じょうほう）","thông tin","じょうほう"],
+["問題（もんだい）","vấn đề","もんだい"],
+["必要（ひつよう）","cần thiết","ひつよう"],
+["場合（ばあい）","trường hợp","ばあい"],
+["方法（ほうほう）","phương pháp","ほうほう"],
+["意見（いけん）","ý kiến","いけん"]
+
+],
+
+N2:[
+
+["企業（きぎょう）","doanh nghiệp","きぎょう"],
+["市場（しじょう）","thị trường","しじょう"],
+["製品（せいひん）","sản phẩm","せいひん"],
+["品質（ひんしつ）","chất lượng","ひんしつ"],
+["管理（かんり）","quản lý","かんり"],
+["生産（せいさん）","sản xuất","せいさん"],
+["組織（そしき）","tổ chức","そしき"],
+["政策（せいさく）","chính sách","せいさく"],
+["現状（げんじょう）","hiện trạng","げんじょう"],
+["課題（かだい）","vấn đề / nhiệm vụ","かだい"]
+
+],
+
+N1:[
+
+["抽象（ちゅうしょう）","trừu tượng","ちゅうしょう"],
+["論理（ろんり）","logic","ろんり"],
+["構築（こうちく）","xây dựng / kiến tạo","こうちく"],
+["本質（ほんしつ）","bản chất","ほんしつ"],
+["認識（にんしき）","nhận thức","にんしき"],
+["根本（こんぽん）","căn bản / gốc rễ","こんぽん"],
+["普遍（ふへん）","phổ quát","ふへん"],
+["相互（そうご）","lẫn nhau","そうご"],
+["客観（きゃっかん）","khách quan","きゃっかん"],
+["妥協（だきょう）","thỏa hiệp","だきょう"]
+
+]
+
+};
 
 
-/* =========================
-   ELEMENT
-========================= */
+/* =========================================================
+   GRAMMAR
+========================================================= */
+
+const G = {
+
+N5:[
+
+[
+"私は毎日 ___ を飲みます。",
+"水",
+"水",
+"本",
+"学校",
+"先生",
+"Uống nước mỗi ngày."
+],
+
+[
+"昨日、映画を ___。",
+"見ました",
+"見ます",
+"見る",
+"見て",
+"Hôm qua nên dùng quá khứ lịch sự."
+],
+
+[
+"ここ ___ 学校です。",
+"は",
+"が",
+"を",
+"に",
+"Mẫu 「AはBです」."
+],
+
+[
+"日本語 ___ 勉強します。",
+"を",
+"が",
+"に",
+"で",
+"「勉強する」đi với を."
+],
+
+[
+"駅 ___ 行きます。",
+"へ",
+"を",
+"が",
+"の",
+"へ chỉ hướng đến."
+],
+
+[
+"りんご ___ 三つあります。",
+"が",
+"を",
+"で",
+"へ",
+"あります thường dùng が."
+],
+
+[
+"日曜日 ___ 働きません。",
+"は",
+"を",
+"に",
+"が",
+"は nêu chủ đề / đối lập."
+],
+
+[
+"友達 ___ 話しました。",
+"と",
+"を",
+"へ",
+"が",
+"と = cùng với."
+
+]
+
+],
+
+N4:[
+
+[
+"日本へ行った ___ があります。",
+"こと",
+"こと",
+"もの",
+"ところ",
+"ため",
+"「Vたことがある」diễn tả kinh nghiệm."
+],
+
+[
+"雨が降っている ___、出かけません。",
+"ので",
+"ので",
+"まで",
+"しか",
+"でも",
+"ので = vì / do."
+],
+
+[
+"宿題を ___ から、寝ます。",
+"して",
+"して",
+"した",
+"する",
+"し",
+"Vてから = sau khi làm."
+],
+
+[
+"来週、旅行する ___ です。",
+"予定",
+"予定",
+"必要",
+"経験",
+"説明",
+"予定です = dự định."
+],
+
+[
+"もっと日本語を話せる ___ なりたいです。",
+"ように",
+"ように",
+"そうに",
+"ために",
+"ことに",
+"ようになる = trở nên có thể."
+],
+
+[
+"先生に作文を ___ もらいました。",
+"直して",
+"直して",
+"直す",
+"直した",
+"直し",
+"Vて + もらう."
+],
+
+[
+"駅まで歩く ___ 20分かかります。",
+"のに",
+"のに",
+"のを",
+"ので",
+"なら",
+"Mất 20 phút để đi bộ đến ga."
+
+]
+
+],
+
+N3:[
+
+[
+"仕事が終わった ___、連絡してください。",
+"ら",
+"ら",
+"ので",
+"のに",
+"ほど",
+"Vたら = nếu / khi."
+],
+
+[
+"健康の ___、毎日運動しています。",
+"ために",
+"ために",
+"ように",
+"ところに",
+"ばかりに",
+"ために = vì mục đích."
+],
+
+[
+"忙しい ___、手伝ってくれました。",
+"のに",
+"のに",
+"ので",
+"ながら",
+"ほど",
+"のに = mặc dù."
+],
+
+[
+"日本へ行く ___、日本語を勉強しています。",
+"ために",
+"ために",
+"ようで",
+"そうで",
+"わけで",
+"Mục đích đi Nhật."
+],
+
+[
+"彼は来る ___ 言っていました。",
+"と",
+"と",
+"を",
+"に",
+"が",
+"「と言う」trích dẫn lời."
+],
+
+[
+"忘れない ___、メモしてください。",
+"ように",
+"ように",
+"ために",
+"ので",
+"ほど",
+"ように = để không quên."
+
+]
+
+],
+
+N2:[
+
+[
+"計画どおりに進む ___、確認が必要です。",
+"かどうか",
+"かどうか",
+"わけ",
+"ばかり",
+"ほど",
+"かどうか = liệu có hay không."
+],
+
+[
+"彼は忙しい ___、手伝ってくれた。",
+"にもかかわらず",
+"にもかかわらず",
+"にしては",
+"わけで",
+"ばかりで",
+"にもかかわらず = mặc dù."
+],
+
+[
+"問題を解決する ___、原因を調べる必要がある。",
+"には",
+"には",
+"では",
+"とは",
+"ほど",
+"Vるには = để làm."
+],
+
+[
+"彼の説明は分かり ___。",
+"にくい",
+"にくい",
+"やすい",
+"すぎる",
+"がたい",
+"分かりにくい = khó hiểu."
+],
+
+[
+"状況を把握した ___ 対応してください。",
+"上で",
+"上で",
+"ばかりで",
+"ところで",
+"ほどで",
+"Vた上で = sau khi / trên cơ sở."
+],
+
+[
+"努力した ___、結果が出なかった。",
+"ものの",
+"ものの",
+"ために",
+"ところで",
+"ばかり",
+"ものの = mặc dù."
+
+]
+
+],
+
+N1:[
+
+[
+"この問題は簡単に解決できる ___。",
+"とは限らない",
+"とは限らない",
+"わけがない",
+"に違いない",
+"ことになった",
+"とは限らない = không hẳn."
+],
+
+[
+"彼の説明は十分とは ___。",
+"言い難い",
+"言い難い",
+"言いやすい",
+"言うべき",
+"言った",
+"言い難い = khó mà nói là."
+],
+
+[
+"現状を踏まえた ___、今後の方針を決める。",
+"上で",
+"上で",
+"ばかりで",
+"ものの",
+"ことなく",
+"踏まえた上で = dựa trên."
+],
+
+[
+"彼の発言は問題を ___ しかねない。",
+"悪化させ",
+"悪化させ",
+"悪化して",
+"悪化され",
+"悪化した",
+"Vます bỏ ます + かねない."
+],
+
+[
+"事情 ___、予定を変更する場合があります。",
+"によっては",
+"によっては",
+"に対しては",
+"に基づいては",
+"にかけては",
+"によっては = tùy theo."
+],
+
+[
+"彼は責任を果たす ___、最後まで努力した。",
+"べく",
+"べく",
+"ほど",
+"ものの",
+"わけで",
+"べく = nhằm / để."
+
+]
+
+]
+
+};
+
+
+/* =========================================================
+   READING
+========================================================= */
+
+const R = {
+
+N5:[
+
+[
+"田中さんは毎朝七時に起きます。朝ごはんを食べて、八時に会社へ行きます。",
+"田中さんは何時に会社へ行きますか。",
+["七時","八時","九時","十時"],
+"八時"
+],
+
+[
+"今日は日曜日です。私は家で本を読みます。午後は友達と公園へ行きます。",
+"午後、何をしますか。",
+["会社へ行く","本を読む","公園へ行く","買い物する"],
+"公園へ行く"
+],
+
+[
+"この店は九時から六時までです。日曜日は休みです。",
+"店が休みの日はいつですか。",
+["月曜日","土曜日","日曜日","毎日"],
+"日曜日"
+
+]
+
+],
+
+N4:[
+
+[
+"山田さんは電車で会社へ通っています。会社は駅から歩いて十分です。雨の日はバスを使います。",
+"雨の日、山田さんは何を使いますか。",
+["電車","バス","自転車","タクシー"],
+"バス"
+],
+
+[
+"来月、家族と北海道へ旅行します。三日間ホテルに泊まる予定です。",
+"ホテルに何日泊まりますか。",
+["一日","二日","三日","四日"],
+"三日"
+],
+
+[
+"日本の夏は暑くて湿度も高いです。六月から七月にかけて雨が多く降ります。",
+"雨が多いのはいつですか。",
+["冬","春","六月から七月","九月から十月"],
+"六月から七月"
+
+]
+
+],
+
+N3:[
+
+[
+"会社では新しいシステムを導入した。その結果、仕事の時間が短くなり、社員の負担も減った。一方、最初は操作方法が分からない社員も多かった。",
+"新システムの問題点は何でしたか。",
+[
+"費用が高いこと",
+"操作方法が分からない人がいたこと",
+"仕事が増えたこと",
+"社員が減ったこと"
+],
+"操作方法が分からない人がいたこと"
+],
+
+[
+"健康のためには食事だけでなく、適度な運動も必要だ。しかし、無理をして毎日長時間運動すると、かえって体に悪い場合がある。",
+"筆者は運動についてどう考えていますか。",
+[
+"長時間必要だ",
+"全く必要ない",
+"適度にすることが大切だ",
+"食事より重要だ"
+],
+"適度にすることが大切だ"
+],
+
+[
+"最近、在宅勤務をする人が増えている。通勤時間を減らせる一方、仕事と生活の区別が難しくなるという問題もある。",
+"在宅勤務の問題は何ですか。",
+[
+"通勤時間が増える",
+"仕事と生活を分けにくい",
+"給料が減る",
+"会社へ行けない"
+],
+"仕事と生活を分けにくい"
+
+]
+
+],
+
+N2:[
+
+[
+"新しい制度を導入する際には、制度そのものだけでなく、利用する人がどのように感じるかを考える必要がある。制度が便利でも、使い方が複雑なら利用者は増えないだろう。",
+"利用者を増やすには何が必要ですか。",
+[
+"制度を複雑にする",
+"便利さだけを考える",
+"利用者の立場も考える",
+"説明を減らす"
+],
+"利用者の立場も考える"
+],
+
+[
+"企業が海外進出を成功させるには、現地の市場を理解することが不可欠である。国内で成功した方法をそのまま使えばよいとは限らない。",
+"海外進出で重要なことは何ですか。",
+[
+"国内の方法をそのまま使う",
+"現地市場を理解する",
+"費用を増やす",
+"商品を減らす"
+],
+"現地市場を理解する"
+],
+
+[
+"環境問題への対応は、一部の企業だけに任せるのではなく、社会全体で取り組む必要がある。個人の小さな行動も長期的には大きな効果につながる。",
+"筆者は環境問題についてどう考えていますか。",
+[
+"企業だけが対応すべきだ",
+"個人の行動は意味がない",
+"社会全体で取り組むべきだ",
+"短期的に解決できる"
+],
+"社会全体で取り組むべきだ"
+
+]
+
+],
+
+N1:[
+
+[
+"ある政策が期待された成果を上げなかったからといって、直ちに政策そのものが誤りだったと断定するのは早計である。実施方法や社会状況など、複数の要因を検討する必要がある。",
+"筆者が主張していることは何ですか。",
+[
+"結果だけで政策を評価すべきだ",
+"政策は必ず正しい",
+"複数の要因を考慮して評価すべきだ",
+"社会状況は関係ない"
+],
+"複数の要因を考慮して評価すべきだ"
+],
+
+[
+"情報が容易に手に入る時代だからこそ、その真偽を見極める能力が重要になる。情報量が多いことと、正確な知識を持っていることは同じではない。",
+"何が重要だと述べていますか。",
+[
+"情報量を増やすこと",
+"情報の真偽を判断する能力",
+"情報を信じないこと",
+"知識を減らすこと"
+],
+"情報の真偽を判断する能力"
+],
+
+[
+"技術の進歩は生活を便利にする一方、新たな問題を生み出すこともある。したがって、技術を導入する際には利点だけでなく、その影響についても慎重に検討しなければならない。",
+"技術導入で必要なことは何ですか。",
+[
+"利点だけを見る",
+"導入を避ける",
+"影響を慎重に検討する",
+"問題を無視する"
+],
+"影響を慎重に検討する"
+]
+
+]
+
+};
+
+
+/* =========================================================
+   GAME STATE
+========================================================= */
+
+let state =
+JSON.parse(
+  localStorage.getItem("baolingoState") || "null"
+) || {
+
+  xp:0,
+  score:0,
+  total:0,
+  correct:0,
+  streak:0,
+  bestStreak:0,
+  level:"N5"
+
+};
+
+
+let currentJLPT =
+state.level || "N5";
+
+let mode="vocab";
+
+let pool=[];
+
+let index=0;
+
+let lives=3;
+
+let sessionCorrect=0;
+
+let sessionXp=0;
+
+let answered=false;
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const $ = id =>
+document.getElementById(id);
 
 const menu =
-  document.getElementById('menu');
+$("menu");
 
 const quiz =
-  document.getElementById('quiz');
+$("quiz");
+
+const result =
+$("result");
 
 const wordEl =
-  document.getElementById('word');
+$("word");
 
 const options =
-  document.getElementById('options');
+$("options");
 
 const feedback =
-  document.getElementById('feedback');
+$("feedback");
 
 const next =
-  document.getElementById('next');
+$("next");
+
+const passage =
+$("passage");
 
 
-/* =========================
-   SHUFFLE
-========================= */
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function save(){
+
+  state.level =
+  currentJLPT;
+
+  localStorage.setItem(
+    "baolingoState",
+    JSON.stringify(state)
+  );
+
+}
+
 
 function shuffle(array){
 
-  return [...array].sort(
-    () => Math.random() - .5
+  return [...array]
+  .sort(
+    () => Math.random() - 0.5
   );
 
 }
 
 
-/* =========================
-   LOAD QUESTION
-========================= */
+/* =========================================================
+   UPDATE UI
+========================================================= */
 
-function load(){
+function updateUI(){
 
-  const w = words[index];
+  state.playerLevel =
+  Math.floor(state.xp / 100) + 1;
 
-  wordEl.textContent = w[0];
+  $("xp").textContent =
+  state.xp;
 
-  options.innerHTML = '';
+  $("score").textContent =
+  state.score;
 
-  feedback.textContent = '';
+  $("streak").textContent =
+  state.streak;
 
-  next.style.display = 'none';
+  $("lives").textContent =
+  lives;
 
-  document.getElementById('progress').textContent =
-    `Câu ${index + 1} / ${words.length}`;
+  $("level").textContent =
+  state.playerLevel;
 
+  $("menuXp").textContent =
+  state.xp;
 
-  shuffle(w.slice(1)).forEach(answer => {
+  $("totalCorrect").textContent =
+  state.correct;
 
-    const button =
-      document.createElement('button');
+  $("playerLevel").textContent =
+  state.playerLevel;
 
-    button.className =
-      'btn secondary';
+  $("menuLevel").textContent =
+  currentJLPT;
 
-    button.style.minWidth =
-      '145px';
-
-    button.textContent =
-      answer;
-
-    button.onclick = () =>
-      answerClick(
-        button,
-        answer === w[1]
-      );
-
-    options.appendChild(button);
-
-  });
+  $("xpBar").style.width =
+  (state.xp % 100) + "%";
 
 }
 
 
-/* =========================
-   ANSWER
-========================= */
+/* =========================================================
+   KANA QUESTION
+========================================================= */
 
-function answerClick(button, correct){
+function makeKana(src){
 
-  [...options.children].forEach(
-    b => b.disabled = true
-  );
+  return src.map(x => {
 
+    const wrong =
+    shuffle(
+      src
+      .map(y => y[1])
+      .filter(v => v !== x[1])
+    ).slice(0,3);
 
-  if(correct){
+    return {
 
-    streak++;
+      q:x[0],
 
-    score += 10 + streak * 2;
+      a:x[1],
 
-    xp += 5;
+      choices:
+      shuffle(
+        [x[1],...wrong]
+      ),
 
-    feedback.textContent =
-      '✅ Chính xác!';
-
-    feedback.style.color =
-      'var(--accent)';
-
-  }
-
-  else{
-
-    streak = 0;
-
-    lives--;
-
-    feedback.textContent =
-      '❌ Chưa đúng — đáp án là ' +
-      words[index][1];
-
-    feedback.style.color =
-      'var(--danger)';
-
-  }
-
-
-  document.getElementById('score').textContent =
-    score;
-
-  document.getElementById('xp').textContent =
-    xp;
-
-  document.getElementById('streak').textContent =
-    streak;
-
-  document.getElementById('lives').textContent =
-    lives;
-
-
-  localStorage.setItem(
-    'baolingoXP',
-    xp
-  );
-
-
-  next.style.display =
-    'inline-block';
-
-}
-
-
-/* =========================
-   START GAME
-========================= */
-
-function startGame(){
-
-  index = 0;
-
-  score = 0;
-
-  streak = 0;
-
-  lives = 3;
-
-  started = true;
-
-
-  xp = Number(
-    localStorage.getItem(
-      'baolingoXP'
-    ) || 0
-  );
-
-
-  document.getElementById('score').textContent =
-    0;
-
-  document.getElementById('xp').textContent =
-    xp;
-
-  document.getElementById('streak').textContent =
-    0;
-
-  document.getElementById('lives').textContent =
-    3;
-
-
-  menu.style.display =
-    'none';
-
-  quiz.style.display =
-    'block';
-
-
-  load();
-
-}
-
-
-/* =========================
-   CHỌN BÀI
-========================= */
-
-document
-  .querySelectorAll('.lesson')
-  .forEach(button => {
-
-    button.onclick = () => {
-
-      mode =
-        button.dataset.mode;
-
-      words =
-        lessons[mode];
-
-
-      document.getElementById(
-        'modeLabel'
-      ).textContent =
-
-        mode === 'hiragana'
-          ? 'Chọn cách đọc đúng của Hiragana'
-
-        : mode === 'katakana'
-          ? 'Chọn cách đọc đúng của Katakana'
-
-        : mode === 'kanji'
-          ? 'Kanji này có nghĩa là gì?'
-
-        : 'Từ tiếng Nhật này có nghĩa là gì?';
-
-
-      startGame();
+      ex:
+      "Cách đọc đúng là " + x[1]
 
     };
 
   });
 
+}
 
-/* =========================
-   NEXT
-========================= */
 
-next.onclick = () => {
+/* =========================================================
+   VOCAB QUESTION
+========================================================= */
 
-  if(lives <= 0){
+function makeSimple(src){
 
-    wordEl.textContent =
-      '💔 Hết tim!';
+  return src.map(x => {
 
-    options.innerHTML = '';
+    const wrong =
+    shuffle(
+      src
+      .map(v => v[1])
+      .filter(v => v !== x[1])
+    ).slice(0,3);
+
+    return {
+
+      q:x[0],
+
+      a:x[1],
+
+      choices:
+      shuffle(
+        [x[1],...wrong]
+      ),
+
+      ex:
+      "Đáp án: " + x[1]
+
+    };
+
+  });
+
+}
+
+
+/* =========================================================
+   KANJI QUESTION
+========================================================= */
+
+function makeKanji(src){
+
+  return src.map(x => {
+
+    const wrong =
+    shuffle(
+      src
+      .map(v => v[1])
+      .filter(v => v !== x[1])
+    ).slice(0,3);
+
+    return {
+
+      q:x[0],
+
+      a:x[1],
+
+      choices:
+      shuffle(
+        [x[1],...wrong]
+      ),
+
+      ex:
+      "Cách đọc: "
+      + x[2]
+      + " · Nghĩa: "
+      + x[1]
+
+    };
+
+  });
+
+}
+
+
+/* =========================================================
+   GRAMMAR
+========================================================= */
+
+function makeGrammar(src){
+
+  return src.map(x => {
+
+    return {
+
+      q:x[0],
+
+      a:x[1],
+
+      choices:
+      shuffle(
+        x.slice(1,5)
+      ),
+
+      ex:x[5]
+
+    };
+
+  });
+
+}
+
+
+/* =========================================================
+   READING
+========================================================= */
+
+function makeReading(src){
+
+  return src.map(x => {
+
+    return {
+
+      passage:x[0],
+
+      q:x[1],
+
+      a:x[3],
+
+      choices:
+      shuffle(x[2]),
+
+      ex:
+      "Đáp án: " + x[3]
+
+    };
+
+  });
+
+}
+
+
+/* =========================================================
+   BUILD POOL
+========================================================= */
+
+function buildPool(){
+
+  if(mode==="hiragana")
+    return makeKana(kanaH);
+
+  if(mode==="katakana")
+    return makeKana(kanaK);
+
+  if(mode==="vocab")
+    return makeSimple(V[currentJLPT]);
+
+  if(mode==="kanji")
+    return makeKanji(K[currentJLPT]);
+
+  if(mode==="grammar")
+    return makeGrammar(G[currentJLPT]);
+
+  if(mode==="reading")
+    return makeReading(R[currentJLPT]);
+
+}
+
+
+/* =========================================================
+   JLPT BUTTONS
+========================================================= */
+
+function renderLevels(){
+
+  const el =
+  $("levels");
+
+  el.innerHTML="";
+
+  ["N5","N4","N3","N2","N1"]
+  .forEach(level => {
+
+    const button =
+    document.createElement("button");
+
+    button.className =
+    "btn secondary"
+    +
+    (
+      level===currentJLPT
+      ? " selected"
+      : ""
+    );
+
+    button.textContent =
+    level;
+
+    button.onclick =
+    () => {
+
+      currentJLPT =
+      level;
+
+      save();
+
+      renderLevels();
+
+      updateUI();
+
+    };
+
+    el.appendChild(button);
+
+  });
+
+}
+
+
+/* =========================================================
+   RENDER QUESTION
+========================================================= */
+
+function renderQuestion(){
+
+  const item =
+  pool[index];
+
+  answered=false;
+
+  $("progress").textContent =
+  `Câu ${index+1} / 10`;
+
+  feedback.textContent="";
+
+  feedback.style.color="";
+
+  next.classList.add("hidden");
+
+  options.innerHTML="";
+
+  wordEl.textContent =
+  item.q;
+
+
+  passage.classList.toggle(
+    "hidden",
+    !item.passage
+  );
+
+
+  if(item.passage){
+
+    passage.textContent =
+    item.passage;
+
+  }
+
+
+  $("speak")
+  .classList.toggle(
+    "hidden",
+    !(
+      mode==="hiragana" ||
+      mode==="katakana" ||
+      mode==="vocab" ||
+      mode==="kanji"
+    )
+  );
+
+
+  item.choices.forEach(
+    choice => {
+
+      const button =
+      document.createElement("button");
+
+      button.className =
+      "option";
+
+      button.textContent =
+      choice;
+
+      button.onclick =
+      () =>
+      answer(
+        button,
+        choice
+      );
+
+      options.appendChild(
+        button
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   ANSWER
+========================================================= */
+
+function answer(
+  button,
+  value
+){
+
+  if(answered)
+    return;
+
+  answered=true;
+
+  const item =
+  pool[index];
+
+  const correct =
+  value === item.a;
+
+
+  [
+    ...options.children
+  ].forEach(b => {
+
+    b.disabled=true;
+
+    if(
+      b.textContent === item.a
+    ){
+
+      b.classList.add(
+        "correct"
+      );
+
+    }
+
+  });
+
+
+  if(!correct){
+
+    button.classList.add(
+      "wrong"
+    );
+
+  }
+
+
+  state.total++;
+
+
+  if(correct){
+
+    sessionCorrect++;
+
+    state.correct++;
+
+    state.streak++;
+
+    state.bestStreak =
+    Math.max(
+      state.bestStreak,
+      state.streak
+    );
+
+
+    const gain =
+    10 +
+    Math.min(
+      state.streak,
+      10
+    );
+
+
+    state.xp += gain;
+
+    sessionXp += gain;
+
+    state.score +=
+    gain * 2;
+
 
     feedback.textContent =
-      'Hãy chơi lại để thử tiếp nhé.';
+    "✅ Chính xác! "
+    + item.ex;
 
-    next.style.display =
-      'none';
+    feedback.style.color =
+    "var(--accent)";
 
-    started = false;
+  }
+
+  else{
+
+    state.streak=0;
+
+    lives--;
+
+    feedback.textContent =
+    "❌ Chưa đúng. "
+    + item.ex;
+
+    feedback.style.color =
+    "var(--danger)";
+
+  }
+
+
+  updateUI();
+
+  save();
+
+  next.classList.remove(
+    "hidden"
+  );
+
+}
+
+
+/* =========================================================
+   FINISH
+========================================================= */
+
+function finish(){
+
+  quiz.classList.add(
+    "hidden"
+  );
+
+  result.classList.remove(
+    "hidden"
+  );
+
+
+  $("resultCorrect")
+  .textContent =
+  sessionCorrect + "/10";
+
+
+  $("resultScore")
+  .textContent =
+  state.score;
+
+
+  $("resultXp")
+  .textContent =
+  "+" + sessionXp;
+
+
+  if(sessionCorrect>=8){
+
+    $("resultTitle")
+    .textContent =
+    "🔥 Xuất sắc!";
+
+  }
+
+  else if(sessionCorrect>=6){
+
+    $("resultTitle")
+    .textContent =
+    "👍 Rất tốt!";
+
+  }
+
+  else{
+
+    $("resultTitle")
+    .textContent =
+    "💪 Tiếp tục nhé!";
+
+  }
+
+
+  $("resultText")
+  .textContent =
+  `Bạn hoàn thành ${currentJLPT}. ` +
+  `Chuỗi hiện tại: ${state.streak}. ` +
+  `Kỷ lục: ${state.bestStreak}.`;
+
+}
+
+
+/* =========================================================
+   START GAME
+========================================================= */
+
+function startGame(){
+
+  pool =
+  shuffle(
+    buildPool()
+  );
+
+
+  /*
+   * Luôn tạo 10 câu.
+   * Nếu bộ câu hỏi ít hơn 10 câu
+   * thì cho phép lặp lại.
+   */
+
+  const original =
+  [...pool];
+
+  while(pool.length < 10){
+
+    pool =
+    pool.concat(
+      shuffle(original)
+    );
+
+  }
+
+
+  pool =
+  pool.slice(0,10);
+
+
+  index=0;
+
+  lives=3;
+
+  sessionCorrect=0;
+
+  sessionXp=0;
+
+
+  menu.classList.add(
+    "hidden"
+  );
+
+  result.classList.add(
+    "hidden"
+  );
+
+  quiz.classList.remove(
+    "hidden"
+  );
+
+
+  updateUI();
+
+  renderQuestion();
+
+}
+
+
+/* =========================================================
+   NEXT
+========================================================= */
+
+function nextQuestion(){
+
+  if(lives<=0){
+
+    finish();
+
+    $("resultTitle")
+    .textContent =
+    "💔 Hết tim";
+
+    $("resultText")
+    .textContent =
+    "Bạn đã hết 3 tim. " +
+    "Hãy chơi lại và thử cải thiện điểm nhé.";
 
     return;
 
@@ -820,57 +2493,187 @@ next.onclick = () => {
   index++;
 
 
-  if(index >= words.length){
+  if(index>=10){
 
-    wordEl.textContent =
-      '🎉 Hoàn thành!';
+    finish();
 
-    options.innerHTML = '';
-
-    feedback.textContent =
-      `Bạn đạt ${score} điểm và nhận tổng ${xp} XP.`;
-
-    next.style.display =
-      'none';
-
-    started = false;
+    return;
 
   }
 
-  else{
 
-    load();
+  renderQuestion();
 
-  }
-
-};
+}
 
 
-/* =========================
-   BUTTON
-========================= */
+/* =========================================================
+   MENU
+========================================================= */
 
-document.getElementById('start').onclick =
-  () => {
+function showMenu(){
 
-    mode = 'vocab';
+  quiz.classList.add(
+    "hidden"
+  );
 
-    words = lessons.vocab;
+  result.classList.add(
+    "hidden"
+  );
+
+  menu.classList.remove(
+    "hidden"
+  );
+
+
+  $("progress")
+  .textContent =
+  "Chọn bài học";
+
+
+  updateUI();
+
+}
+
+
+/* =========================================================
+   LESSON BUTTONS
+========================================================= */
+
+document
+.querySelectorAll(".lesson")
+.forEach(button => {
+
+  button.onclick = () => {
+
+    mode =
+    button.dataset.mode;
 
     startGame();
 
   };
 
-
-document.getElementById('restart').onclick =
-  startGame;
+});
 
 
-/* =========================
-   KHỞI TẠO
-========================= */
+/* =========================================================
+   BUTTONS
+========================================================= */
 
-load();
+next.onclick =
+nextQuestion;
+
+
+$("again").onclick =
+startGame;
+
+
+$("resultMenu").onclick =
+showMenu;
+
+
+$("backMenu").onclick =
+showMenu;
+
+
+$("restart").onclick =
+startGame;
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+$("reset").onclick =
+() => {
+
+  const ok =
+  confirm(
+    "Xóa toàn bộ XP, điểm và thống kê?"
+  );
+
+
+  if(!ok)
+    return;
+
+
+  localStorage.removeItem(
+    "baolingoState"
+  );
+
+
+  state={
+
+    xp:0,
+    score:0,
+    total:0,
+    correct:0,
+    streak:0,
+    bestStreak:0,
+    level:"N5"
+
+  };
+
+
+  currentJLPT="N5";
+
+  lives=3;
+
+  renderLevels();
+
+  showMenu();
+
+};
+
+
+/* =========================================================
+   JAPANESE SPEECH
+========================================================= */
+
+$("speak").onclick =
+() => {
+
+  if(
+    !("speechSynthesis" in window)
+  ){
+
+    alert(
+      "Trình duyệt của bạn không hỗ trợ phát âm."
+    );
+
+    return;
+
+  }
+
+
+  speechSynthesis.cancel();
+
+
+  const utterance =
+  new SpeechSynthesisUtterance(
+    wordEl.textContent
+  );
+
+
+  utterance.lang="ja-JP";
+
+  utterance.rate=.78;
+
+
+  speechSynthesis.speak(
+    utterance
+  );
+
+};
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+renderLevels();
+
+updateUI();
 
 </script>
 
